@@ -1,0 +1,4 @@
+*.tif
+*.zip
+.idea
+venv/*
