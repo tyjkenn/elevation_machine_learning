@@ -2,3 +2,5 @@
 *.zip
 .idea
 venv/*
+*cache*
+*.xml
