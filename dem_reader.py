@@ -11,6 +11,12 @@ def get_new_size(size):
     return int(size[0] * 480), int(size[1] * 480)
 
 
+def display_sample(sample):
+    img = Image.fromarray(sample, 'I')
+    img = img.point(lambda p: p * 0.5)
+    img.show()
+
+
 def get_samples(filename, coordinates, size):
     convert_coordinates(coordinates)
     size = get_new_size(size)
@@ -21,9 +27,8 @@ def get_samples(filename, coordinates, size):
     for co in coordinates:
         sample = full_map[co[0]-size[0]:co[0]+size[0], co[1]-size[1]:co[1]+size[1]]
         samples.append(sample)
-        img = Image.fromarray(sample, 'I')
-        img = img.point(lambda p: p * 0.05)
-        img.show()
+    # test sample
+    # display_sample(sample)
     return samples
 
 
@@ -31,10 +36,13 @@ def calc_slopes(sample):
     slopes = []
     for x in range(sample.shape[0] - 1):
         for y in range(sample.shape[1] - 1):
-            slopes.append(sample[x, y] - sample[x - 1, y - 1])
-            slopes.append(sample[x, y] - sample[x + 1, y - 1])
-            slopes.append(sample[x, y] - sample[x - 1, y + 1])
-            slopes.append(sample[x, y] - sample[x + 1, y + 1])
+            new_slopes = [
+                sample[x, y] - sample[x - 1, y - 1],
+                sample[x, y] - sample[x + 1, y - 1],
+                sample[x, y] - sample[x - 1, y + 1],
+                sample[x, y] - sample[x + 1, y + 1]
+            ]
+            slopes.extend(new_slopes)
     return slopes
 
 def analyze_sample(sample):
@@ -42,9 +50,13 @@ def analyze_sample(sample):
     maxi = sample.max()
     avg = sample.mean()
     stdev = sample.std()
-    slopes = calc_slopes(sample)
+    slopes, extreme_slopes = calc_slopes(sample)
     slope_std = np.std(slopes)
-    return [mini, maxi, avg, stdev, slope_std]
+    steep_count = 0
+    for slope in slopes:
+        if slope >= 50:
+            steep_count += 1
+    return [mini, maxi, avg, stdev, slope_std, steep_count]
 
 
 def analyze_samples(samples):
