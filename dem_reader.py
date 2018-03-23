@@ -3,6 +3,7 @@ import numpy as np
 import plotly
 import plotly.graph_objs as go
 
+
 def convert_coordinates(coordinates):
     for i in range(len(coordinates)):
         coordinates[i] = (int((50 - coordinates[i][0]) * 480), int((coordinates[i][1] + 90) * 480))
@@ -67,6 +68,7 @@ def calc_slopes(sample):
             ]
             slopes.extend(new_slopes)
     return slopes
+
 
 def analyze_sample(sample):
     mini = sample.min()
