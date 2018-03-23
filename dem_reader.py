@@ -1,6 +1,7 @@
 from PIL import Image
 import numpy as np
-
+import plotly
+import plotly.graph_objs as go
 
 def convert_coordinates(coordinates):
     for i in range(len(coordinates)):
@@ -17,6 +18,28 @@ def display_sample(sample):
     img.show()
 
 
+def display_sample_3d(sample):
+    data = [
+        go.Surface(
+            z=sample
+        )
+    ]
+    layout = go.Layout(
+        title='Elevation',
+        autosize=False,
+        width=1000,
+        height=1000,
+        margin=dict(
+            l=65,
+            r=50,
+            b=65,
+            t=90
+        )
+    )
+    fig = go.Figure(data=data, layout=layout)
+    plotly.offline.plot(fig)
+
+
 def get_samples(filename, coordinates, size):
     convert_coordinates(coordinates)
     size = get_new_size(size)
@@ -28,7 +51,7 @@ def get_samples(filename, coordinates, size):
         sample = full_map[co[0]-size[0]:co[0]+size[0], co[1]-size[1]:co[1]+size[1]]
         samples.append(sample)
     # test sample
-    # display_sample(sample)
+    # display_sample_3d(sample)
     return samples
 
 
@@ -50,7 +73,7 @@ def analyze_sample(sample):
     maxi = sample.max()
     avg = sample.mean()
     stdev = sample.std()
-    slopes, extreme_slopes = calc_slopes(sample)
+    slopes = calc_slopes(sample)
     slope_std = np.std(slopes)
     steep_count = 0
     for slope in slopes:
