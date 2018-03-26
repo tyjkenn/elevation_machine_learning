@@ -1,4 +1,5 @@
 import dem_reader as dr
+import terrain_generator as tg
 from sklearn.naive_bayes import GaussianNB
 import random as rd
 from sklearn.model_selection import train_test_split
