@@ -42,9 +42,10 @@ classes = [
 
 full_coord, full_class = vary_coordinates(coordinates, classes, 10, .4)
 
-samples = dr.get_samples('30n120w_20101117_gmted_max075.tif', full_coord, (.25, .25))
+samples = dr.get_samples('C:\\Users\\Zachary\\Documents\\school\\cs450\\dem_usa\\30n120w_20101117_gmted_max075.tif', full_coord, (.25, .25))
 data = dr.analyze_samples(samples)
-
+print(max([max(sub_data) for sub_data in data]))
+print(min([min(sub_data) for sub_data in data]))
 train_data, test_data, train_target, test_target = train_test_split(data, full_class, test_size=.3, train_size=.7, shuffle=True)
 
 gnb = GaussianNB()
