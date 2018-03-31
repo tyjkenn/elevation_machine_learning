@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-*.tif
-*.zip
-.idea
-venv/*
-*cache*
-*.xml
-*.html
-*.pyc
-=======
 *.tif
 *.zip
 .idea
@@ -16,4 +6,4 @@ venv/*
 *.xml
 *.html
 *.png
->>>>>>> master
+*.pyc
