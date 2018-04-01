@@ -97,6 +97,17 @@ gnb = GaussianNB()
 model = gnb.fit(train_data, train_target)
 pred = model.predict(test_data)
 score = accuracy_score(test_target, pred)
+print("class prior")
+print(model.class_prior_)
+print("")
+print("class count")
+print(model.class_count_)
+print("")
+print("theta") 
+print(model.theta_)
+print("")
+print("sigma")
+print(model.sigma_)
 
 # Time to score!
 print("Score: " + ("%.1f" % (score * 100)) + "%")
@@ -114,8 +125,9 @@ print(rdpred)
 print('Classification of flat samples')
 print(flatpred)
 
-# Map based on training
-map_classifications(model, .1)
+# # Map based on training
+# map_classifications(model, .1)
 
-# Try clustering
-make_cluster_map(7, 1)
+# # Try clustering
+# make_cluster_map(7, 1)
+tg.test(20)

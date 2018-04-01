@@ -52,6 +52,9 @@ def get_samples(dem, coordinates, size):
         Image.MAX_IMAGE_PIXELS = 1000000000
         im = Image.open(dem)
         full_map = np.array(im)
+        print(full_map)
+        print("shape of full map:")
+        print(full_map.shape)
     else:
         full_map = dem
     samples = []
@@ -63,6 +66,8 @@ def get_samples(dem, coordinates, size):
             samples.append(sample)
     # test sample
     # display_sample_3d(sample)
+    print("sample:")
+    print(sample[0])
     return samples
 
 
