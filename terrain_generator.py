@@ -1,4 +1,5 @@
-from random import randint
+from random import randint, gauss
+import numpy as np
 # random datasets within a range
 ### https://stackoverflow.com/questions/48875494/in-python-how-do-i-generate-random-data-sets-within-a-range-that-follow-a-func
 
@@ -18,20 +19,22 @@ test_classes = ["canyon", "mountain", "plains", "random"]
 
 class TerrainGenerator:
     """class for the terrain generator"""
-    def __init__(self, classes=None):
+    def __init__(self, sigma, theta, classes):
         self._classes=classes
-        if self._classes == None:
-            raise ValueError("no array for classes passed")
+        self._sigma=sigma # variance
+        self._theta=theta # mean
 
-    def _gen_random_list_of_classes(self, size):
-        """make a random list of classes"""
-        random_classes, size_classes = [], len(self._classes)
-        for i in range(size):
-            random_n = randint(0,size_classes-1)
-            random_classes.append(self._classes[random_n])
-        return random_classes
+    def _gen_random_data(self):
+        """generate random data given the classes"""
+        n = 100
+        # hard coding to index 1 to generate mountains
+        print(self._theta[1])
+        # eventually get rid of the hard-coded [0]
+        return np.random.normal(loc=self._theta[1][0], scale=self._sigma[1][0], size=(n,n))
+
+    ## box muller method to generate random data for each random class
+
+    ## turn random data into a TIF image, appending to the last TIF image generated
 
 def test(size):
-    tg = TerrainGenerator(test_classes)
-    rc = tg._gen_random_list_of_classes(size)
-    print(rc)
+    tg = TerrainGenerator(None, None, test_classes)

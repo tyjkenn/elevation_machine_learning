@@ -1,5 +1,5 @@
 import dem_reader as dr
-import terrain_generator as tg
+from terrain_generator import TerrainGenerator
 from sklearn.naive_bayes import GaussianNB
 import random as rd
 from sklearn.model_selection import train_test_split
@@ -82,6 +82,7 @@ classes = [
     "plains",
     "mountain"
 ]
+test_classes = ["canyon", "mountain", "plains", "random"]
 
 full_coord, full_class = vary_coordinates(coordinates, classes, 10, .4)
 
@@ -97,17 +98,17 @@ gnb = GaussianNB()
 model = gnb.fit(train_data, train_target)
 pred = model.predict(test_data)
 score = accuracy_score(test_target, pred)
-print("class prior")
-print(model.class_prior_)
-print("")
-print("class count")
-print(model.class_count_)
-print("")
-print("theta") 
-print(model.theta_)
-print("")
-print("sigma")
-print(model.sigma_)
+# print("class prior")
+# print(model.class_prior_)
+# print("")
+# print("class count")
+# print(model.class_count_)
+# print("")
+# print("theta") 
+# print(model.theta_)
+# print("")
+# print("sigma")
+# print(model.sigma_)
 
 # Time to score!
 print("Score: " + ("%.1f" % (score * 100)) + "%")
@@ -130,4 +131,6 @@ print(flatpred)
 
 # # Try clustering
 # make_cluster_map(7, 1)
-tg.test(20)
+
+tg = TerrainGenerator(model.sigma_, model.theta_, test_classes)
+print(tg._gen_random_data())
